@@ -9,6 +9,7 @@ router = APIRouter()
 
 @router.post("/prompt")
 async def generate_article(request: Request, prompt: str, word_limit: int, translate: Optional[str] = None):
+    print("API Request Received")
     try:
       prompt_template = '''
       [INST] <<SYS>>
