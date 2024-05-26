@@ -2,7 +2,6 @@
 from fastapi import APIRouter, Request
 import json
 from llama_model import lcpp_llm
-from models import PromptRequest
 from services import get_weather_data, search_bing, translate_text
 
 router = APIRouter()
