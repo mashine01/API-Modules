@@ -9,6 +9,7 @@ router = APIRouter()
 
 @router.post("/prompt")
 async def generate_article(request: Request, prompt: str, word_limit: int, translate: Optional[str] = None):
+    try:
       prompt_template = '''
       [INST] <<SYS>>
       You are a helpful assistant that calls functions based on prompt within INST block.
