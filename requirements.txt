@@ -1,0 +1,6 @@
+FastAPI
+nest-asyncio
+pyngrok
+uvicorn
+python-multipart
+huggingface_hub

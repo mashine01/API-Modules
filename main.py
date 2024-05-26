@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pyngrok import ngrok
 from routes import router
+from config import NGROK_AUTH_TOKEN
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -20,7 +21,7 @@ app.add_middleware(
 # Include router
 app.include_router(router)
 
-auth_token = "2fM2RPGQACidFDDZgaEmMTQnbSQ_7E7sSafjHSGnFgQH6rERF"
+auth_token = NGROK_AUTH_TOKEN
 ngrok.set_auth_token(auth_token)
 ngrok_tunnel = ngrok.connect(8000)
 print('Public URL:', ngrok_tunnel.public_url)

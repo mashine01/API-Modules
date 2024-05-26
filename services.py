@@ -59,17 +59,3 @@ def translate_text(text, to_lang):
     request = requests.post(constructed_url, params=params, headers=headers, json=body)
     response = request.json()
     return response[0]["translations"][0]["text"]
-
-def get_cricket_data(offset=0):
-    url = f"https://api.cricapi.com/v1/currentMatches?apikey={CRICAPI_KEY}&offset={offset}"
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            data = response.json()
-            return data
-        else:
-            print(f"Failed to fetch data. Status code: {response.status_code}")
-            return None
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return None
