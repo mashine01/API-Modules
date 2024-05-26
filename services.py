@@ -2,7 +2,7 @@ import requests
 import datetime
 import uuid
 import json
-from config import OPENWEATHER_API_KEY, BING_API_KEY, TRANSLATOR_API_KEY, TRANSLATOR_LOCATION, CRICAPI_KEY
+from config import OPENWEATHER_API_KEY, BING_API_KEY, TRANSLATOR_API_KEY, TRANSLATOR_LOCATION
 
 def get_weather_data(city):
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={OPENWEATHER_API_KEY}'
