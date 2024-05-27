@@ -51,7 +51,7 @@ async def generate_article(request: Request, prompt: str, word_limit: int, trans
 
       user_final = prompt_template + user_prompt
       function_response=lcpp_llm(user_final, max_tokens=512, temperature=0, top_p=0.5, repeat_penalty=1.2, top_k=150, echo=False)
-      text = function_response["choices"][0]["text"]
+      text = function_response
       print(text)
       parsed_output = json.loads(text)
       # Extract function name and arguments
@@ -87,10 +87,10 @@ async def generate_article(request: Request, prompt: str, word_limit: int, trans
       final_prompt = article_prompt + user_prompt
 
       response = lcpp_llm(final_prompt, max_tokens=1024, temperature=0.7, top_p=0.95, repeat_penalty=1.2, top_k=80, echo=False)
-      print(response["choices"][0]["text"])
+      print(response)
       if translate:
-        return translate_text(response["choices"][0]["text"], translate)
+        return translate_text(response, translate)
       else:
-        return response["choices"][0]["text"]
+        return response
     except Exception:
       return text
