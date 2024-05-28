@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pyngrok import ngrok
 from routes import router
 from config import NGROK_AUTH_TOKEN
+import nest_asyncio
 
 # Initialize FastAPI app
 app = FastAPI()
