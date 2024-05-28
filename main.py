@@ -20,9 +20,17 @@ app.add_middleware(
 # Include router
 app.include_router(router)
 
-auth_token = NGROK_AUTH_TOKEN
-ngrok.set_auth_token(auth_token)
+# Set the authtoken
+ngrok.set_auth_token(NGROK_AUTH_TOKEN)
+
+# Connect to ngrok
 ngrok_tunnel = ngrok.connect(8000)
+
+# Print the public URL
 print('Public URL:', ngrok_tunnel.public_url)
 
-uvicorn.run(app, host="0.0.0.0", port=8000)
+# Apply nest_asyncio
+nest_asyncio.apply()
+
+# Run the uvicorn server
+uvicorn.run(app, port=8000)

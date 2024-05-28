@@ -51,7 +51,7 @@ async def generate_article(request: Request, prompt: str, word_limit: int, trans
 
       user_final = prompt_template + user_prompt
       function_response=lcpp_llm(user_final, max_tokens=512, temperature=0, top_p=0.5, repeat_penalty=1.2, top_k=150, echo=False)
-      text = function_response
+      text = function_response["choices"][0]["text"]
       print(text)
       parsed_output = json.loads(text)
       # Extract function name and arguments
@@ -61,14 +61,14 @@ async def generate_article(request: Request, prompt: str, word_limit: int, trans
 
       # Dynamically call the function
       api_data = getattr(sys.modules[__name__], function_name)(arguments)
+      print(api_data)
 
       # Article Generation
       average_token_per_word = 1.3
       max_tokens = word_limit * average_token_per_word
       article_prompt = f'''[INST] <<SYS>>
-      You are a helpful, respectful and honest SEO Content Write. You only and only write articles based on the format: title, introduction, body and finally conclusion.
+      You are a helpful, respectful and honest SEO Content Writer. You only and only write articles based on the format: title, introduction, body and finally conclusion.
       Please ensure that your responses are mildly formal, socially unbiased and positive in nature.
-      You are limited to only talk about the topics of sports and the weather.
       If a question does not make any sense, or is not factually coherent,
       explain why instead of answering something not correct.
       If you do not know the answer to a question, please don't share false information.
@@ -87,10 +87,12 @@ async def generate_article(request: Request, prompt: str, word_limit: int, trans
       final_prompt = article_prompt + user_prompt
 
       response = lcpp_llm(final_prompt, max_tokens=1024, temperature=0.7, top_p=0.95, repeat_penalty=1.2, top_k=80, echo=False)
-      print(response)
+      article = response["choices"][0]["text"]
+      print(article)
       if translate:
-        return translate_text(response, translate)
+        return translate_text(article, translate)
       else:
-        return response
-    except Exception:
+        return article
+    except Exception as e:
+      print("An error occurred:", e)
       return text
